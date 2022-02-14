@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<updates>
+	<update version="1.0">
+		<files>
+			<file path="Components/LiveSplit.SifuLoadRemover.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Basically works with the English Version of the game</change>
+		</changelog>
+	</update>
+</updates>
