@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32203.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveSplit.SifuLoadRemover", "LiveSplit.SifuLoadRemover\LiveSplit.SifuLoadRemover.csproj", "{9120108C-1B53-49E1-BA2E-175DD3F9CC2D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9120108C-1B53-49E1-BA2E-175DD3F9CC2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9120108C-1B53-49E1-BA2E-175DD3F9CC2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9120108C-1B53-49E1-BA2E-175DD3F9CC2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9120108C-1B53-49E1-BA2E-175DD3F9CC2D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F42961CF-EF57-4F7F-98A1-B075A13BF15F}
+	EndGlobalSection
+EndGlobal
