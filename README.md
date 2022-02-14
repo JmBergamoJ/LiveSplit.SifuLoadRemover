@@ -20,7 +20,7 @@ Currently only works with the English Version of the game.
 
 ## Installation instructions for LiveSplit
 
-- Download LiveSplit.SifuLoadRemover [HERE](https://github.com/JmBergamoJ/LiveSplit.SifuLoadRemover/raw/master/Download/LiveSplit.SifuLoadRemover.rar)
+- Download LiveSplit.SifuLoadRemover [HERE](https://github.com/JmBergamoJ/LiveSplit.SifuLoadRemover/raw/master/Download/LiveSplit.SifuLoadRemover.zip)
 - Extract the contents to your LiveSplit/Components folder (you should see lots of other DLL's in there)
 - Open LiveSplit, then right-click and select Edit Layout
 - Add the autosplitter (under the Control category)

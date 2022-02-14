@@ -12,7 +12,7 @@ namespace LiveSplit.SifuLoadRemover.Misc
         {
             public static string Name = "Sifu Load Remover";
             public static string Description = "Automatically detects and removes loads (GameTime) for Sifu.";
-            public static string UpdateURL = "https://raw.githubusercontent.com/JmBergamoJ/SifuLoadRemover/master/";
+            public static string UpdateURL = "https://raw.githubusercontent.com/JmBergamoJ/LiveSplit.SifuLoadRemover/master/";
         }
     }
 }
