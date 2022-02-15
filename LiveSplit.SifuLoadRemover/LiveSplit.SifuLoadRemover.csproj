@@ -50,7 +50,6 @@
     <Reference Include="Tesseract, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Tesseract.4.1.1\lib\net45\Tesseract.dll</HintPath>
     </Reference>
-    <Reference Include="UpdateManager, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Component\SifuLoadRemoverComponent.cs" />
@@ -89,10 +88,15 @@
     <EmbeddedResource Include="Resources\tessdata\spa.traineddata" />
     <EmbeddedResource Include="Resources\tessdata\tur.traineddata" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LiveSplit\LiveSplit\UpdateManager\UpdateManager.csproj">
+      <Project>{56dea3a0-2eb7-493b-b50f-a5e3aa8ae52a}</Project>
+      <Name>UpdateManager</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy $(TargetPath) "$(SolutionDir)\..\LiveSplit\LiveSplit\bin\Debug\Components" /Y</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Tesseract.4.1.1\build\Tesseract.targets" Condition="Exists('..\packages\Tesseract.4.1.1\build\Tesseract.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
