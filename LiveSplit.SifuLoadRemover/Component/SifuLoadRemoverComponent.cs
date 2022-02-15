@@ -158,7 +158,7 @@ namespace LiveSplit.SifuLoadRemover.Component
                     framesSinceLastCheck++;
                     lastTime = DateTime.Now;
                     bool wasLoading = isLoading;
-                    if (framesSinceLastCheck >= 10) /*Check every 10 frames for performance*/
+                    if (framesSinceLastCheck >= 4) /*Check every 4 frames for performance*/
                     {
                         framesSinceLastCheck = 0;
                         Bitmap capture = settings.CaptureImage();
@@ -181,8 +181,10 @@ namespace LiveSplit.SifuLoadRemover.Component
 
                                     Console.WriteLine("Text (GetText): {0}", text);
                                     if (confidence > 0.5f)
-                                        isLoading = settings.gameLanguage.LoadingText().Contains(text.ToUpper().Trim());
+                                        isLoading = text.ToUpper().Contains(settings.gameLanguage.LoadingText());
                                     else if (confidence == 0 && string.IsNullOrEmpty(text) && isLoading) //EMPTY PAGE - NOT LOADING
+                                        isLoading = false;
+                                    else
                                         isLoading = false;
                                 }
                             }
@@ -386,7 +388,7 @@ namespace LiveSplit.SifuLoadRemover.Component
                 {
                     var assembly = Assembly.GetExecutingAssembly();
                     var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
-                    engine = new TesseractEngine($@"{assemblyDirectory}/SifuLoadRemover-tessdata", settings.gameLanguage.TessDataLanguage(), EngineMode.LstmOnly);
+                    engine = new TesseractEngine($@"{assemblyDirectory}/SifuLoadRemover-tessdata", settings.gameLanguage.TessDataLanguage(), EngineMode.Default);
                 }
                 return engine;
             }

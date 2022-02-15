@@ -49,7 +49,7 @@ namespace LiveSplit.SifuLoadRemover
 
         private Size captureSize = new Size(200, 100);
 
-        private float cropOffsetX = -800.0f;
+        private float cropOffsetX = -810.0f;
 
         private float cropOffsetY = -0.0f;
 
