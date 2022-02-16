@@ -30,6 +30,7 @@ Currently only works with the English Version of the game.
 
 - The timer doesn't start automatically and doesn't end automatically. This is due to the fact that different categories have different end criteria. For the time being, make sure to split manually during the start and end of your run.
 - Third party dependencies not bundled into the Component, I.E [Tesseract](https://github.com/charlesw/tesseract)
+- Supports only the English version of the game :(
 
 # Official Sifu Unofficial Server
 
