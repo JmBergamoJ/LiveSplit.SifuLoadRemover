@@ -38,6 +38,9 @@
             this.croppedPreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtOffsetX = new System.Windows.Forms.TextBox();
+            this.txtSizeY = new System.Windows.Forms.TextBox();
+            this.txtSizeX = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.updatePreviewButton = new System.Windows.Forms.Button();
             this.scalingLabel = new System.Windows.Forms.Label();
@@ -53,6 +56,9 @@
             this.autoSplitNameLbl = new System.Windows.Forms.Label();
             this.autoSplitCategoryLbl = new System.Windows.Forms.Label();
             this.enableAutoSplitterChk = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.croppedPreviewPictureBox)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -69,7 +75,7 @@
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVersion.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblVersion.Location = new System.Drawing.Point(387, 548);
+            this.lblVersion.Location = new System.Drawing.Point(354, 548);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(37, 13);
             this.lblVersion.TabIndex = 21;
@@ -159,12 +165,18 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(476, 746);
+            this.tabControl1.Size = new System.Drawing.Size(443, 746);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.label10);
+            this.tabPage1.Controls.Add(this.label9);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.txtOffsetX);
+            this.tabPage1.Controls.Add(this.txtSizeY);
+            this.tabPage1.Controls.Add(this.txtSizeX);
             this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.gameLanguageComboBox);
@@ -181,9 +193,35 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(468, 720);
+            this.tabPage1.Size = new System.Drawing.Size(435, 720);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Setup";
+            // 
+            // txtOffsetX
+            // 
+            this.txtOffsetX.Location = new System.Drawing.Point(386, 573);
+            this.txtOffsetX.Name = "txtOffsetX";
+            this.txtOffsetX.Size = new System.Drawing.Size(43, 20);
+            this.txtOffsetX.TabIndex = 46;
+            this.txtOffsetX.Text = "-810";
+            this.txtOffsetX.TextChanged += new System.EventHandler(this.txtOffsetX_TextChanged);
+            // 
+            // txtSizeY
+            // 
+            this.txtSizeY.Location = new System.Drawing.Point(386, 653);
+            this.txtSizeY.Name = "txtSizeY";
+            this.txtSizeY.Size = new System.Drawing.Size(43, 20);
+            this.txtSizeY.TabIndex = 45;
+            this.txtSizeY.Text = "100";
+            // 
+            // txtSizeX
+            // 
+            this.txtSizeX.Location = new System.Drawing.Point(386, 613);
+            this.txtSizeX.Name = "txtSizeX";
+            this.txtSizeX.Size = new System.Drawing.Size(43, 20);
+            this.txtSizeX.TabIndex = 44;
+            this.txtSizeX.Text = "200";
+            this.txtSizeX.TextChanged += new System.EventHandler(this.txtSizeX_TextChanged);
             // 
             // panel1
             // 
@@ -252,6 +290,7 @@
             this.gameLanguageComboBox.Name = "gameLanguageComboBox";
             this.gameLanguageComboBox.Size = new System.Drawing.Size(308, 21);
             this.gameLanguageComboBox.TabIndex = 41;
+            this.gameLanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.gameLanguageComboBox_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -286,7 +325,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(468, 720);
+            this.tabPage2.Size = new System.Drawing.Size(435, 720);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "AutoSplitter";
             // 
@@ -356,6 +395,33 @@
             this.enableAutoSplitterChk.UseVisualStyleBackColor = true;
             this.enableAutoSplitterChk.CheckedChanged += new System.EventHandler(this.enableAutoSplitterChk_CheckedChanged);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(345, 576);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(38, 13);
+            this.label8.TabIndex = 47;
+            this.label8.Text = "Offset:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(345, 616);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(37, 13);
+            this.label9.TabIndex = 48;
+            this.label9.Text = "SizeX:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(345, 656);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(37, 13);
+            this.label10.TabIndex = 49;
+            this.label10.Text = "SizeY:";
+            // 
             // SifuLoadRemoverSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -405,5 +471,11 @@
         private System.Windows.Forms.Button updatePreviewButton;
         private System.Windows.Forms.Label scalingLabel;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TextBox txtSizeY;
+        private System.Windows.Forms.TextBox txtSizeX;
+        private System.Windows.Forms.TextBox txtOffsetX;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
     }
 }

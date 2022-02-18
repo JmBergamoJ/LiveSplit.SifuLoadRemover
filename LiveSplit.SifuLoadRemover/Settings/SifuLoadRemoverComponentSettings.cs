@@ -13,6 +13,7 @@ using System.Xml;
 using LiveSplit.SifuLoadRemover.Misc.Enums;
 using LiveSplit.SifuLoadRemover.Misc.Extensions;
 using LiveSplit.SifuLoadRemover.Misc;
+using Tesseract;
 
 namespace LiveSplit.SifuLoadRemover
 {
@@ -20,7 +21,26 @@ namespace LiveSplit.SifuLoadRemover
     {
         #region Public Fields
 
-        public GameLanguage gameLanguage = GameLanguage.English;
+        public GameLanguage gameLanguage { get; set; }
+
+
+
+        private TesseractEngine engine = null;
+
+        public TesseractEngine Engine
+        {
+            get
+            {
+                if (engine == null)
+                {
+                    var assembly = Assembly.GetExecutingAssembly();
+                    var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
+                    engine = new TesseractEngine($@"{assemblyDirectory}/SifuLoadRemover-tessdata", gameLanguage.TessDataLanguage(), EngineMode.Default);
+                }
+                return engine;
+            }
+        }
+
 
         public bool AutoSplitterEnabled = false;
 
@@ -47,9 +67,9 @@ namespace LiveSplit.SifuLoadRemover
 
         private List<string> captureIDs = null;
 
-        private Size captureSize = new Size(200, 100);
+        private Size captureSize { get => gameLanguage.Size(); set => captureSize = value; }
 
-        private float cropOffsetX = -810.0f;
+        private float cropOffsetX { get => gameLanguage.CropOffsetX(); set => cropOffsetX = value; }
 
         private float cropOffsetY = -0.0f;
 
@@ -99,9 +119,26 @@ namespace LiveSplit.SifuLoadRemover
 
         #region Public Constructors
 
+        private bool IsDebug
+        {
+            get
+            {
+#if DEBUG
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+
         public SifuLoadRemoverSettings(LiveSplitState state)
         {
             InitializeComponent();
+
+            txtOffsetX.Enabled = IsDebug;
+            txtSizeX.Enabled = IsDebug;
+            txtSizeY.Enabled = IsDebug;
 
             AllGameAutoSplitSettings = new Dictionary<string, XmlElement>();
             dynamicAutoSplitterControls = new List<Control>();
@@ -371,7 +408,9 @@ namespace LiveSplit.SifuLoadRemover
 
             settingsNode.AppendChild(ToElement(document, "AutoSplitEnabled", enableAutoSplitterChk.Checked));
             settingsNode.AppendChild(ToElement(document, "AutoSplitDisableOnSkipUntilSplit", chkAutoSplitterDisableOnSkip.Checked));
-            settingsNode.AppendChild(ToElement(document, "GameLanguage", int.TryParse(gameLanguageComboBox.SelectedValue as string, out int res) ? res : (int)GameLanguage.English));
+
+            int.TryParse(gameLanguageComboBox?.SelectedValue?.ToString(), out int res);
+            settingsNode.AppendChild(ToElement(document, "GameLanguage", res));
 
             var splitsNode = document.CreateElement("AutoSplitGames");
 
@@ -454,8 +493,8 @@ namespace LiveSplit.SifuLoadRemover
 
                 if (element["GameLanguage"] != null)
                 {
-                    gameLanguageComboBox.SelectedValue = Convert.ToInt32(element["GameLanguage"].InnerText);
-                    gameLanguage = (GameLanguage)Convert.ToInt32(element["GameLanguage"].InnerText);
+                    gameLanguageComboBox.SelectedValue = element["GameLanguage"].InnerText;
+                    gameLanguage = (GameLanguage)Enum.Parse(typeof(GameLanguage), element["GameLanguage"].InnerText);
                 }
 
                 if (element["AutoSplitGames"] != null)
@@ -838,9 +877,9 @@ namespace LiveSplit.SifuLoadRemover
 
                 //System.IO.Directory.CreateDirectory(fbd.SelectedPath);
                 numCaptures++;
-                lastFullCapture.Save(fbd.SelectedPath + "/" + numCaptures.ToString() + "_FULL_" + lastMatchingBins + ".jpg", ImageFormat.Jpeg);
-                lastFullCroppedCapture.Save(fbd.SelectedPath + "/" + numCaptures.ToString() + "_FULL_CROPPED_" + lastMatchingBins + ".jpg", ImageFormat.Jpeg);
-                lastDiagnosticCapture.Save(fbd.SelectedPath + "/" + numCaptures.ToString() + "_DIAGNOSTIC_" + lastMatchingBins + ".jpg", ImageFormat.Jpeg);
+                lastFullCapture.Save(fbd.SelectedPath + "/" + numCaptures.ToString() + "_FULL_" + lastMatchingBins + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                lastFullCroppedCapture.Save(fbd.SelectedPath + "/" + numCaptures.ToString() + "_FULL_CROPPED_" + lastMatchingBins + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                lastDiagnosticCapture.Save(fbd.SelectedPath + "/" + numCaptures.ToString() + "_DIAGNOSTIC_" + lastMatchingBins + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
                 saveFeatureVectorToTxt(lastFeatures, numCaptures.ToString() + "_FEATURES_" + lastMatchingBins + ".txt", fbd.SelectedPath);
             }
             catch (Exception ex)
@@ -940,6 +979,31 @@ namespace LiveSplit.SifuLoadRemover
         private void chkAutoSplitterDisableOnSkip_CheckedChanged(object sender, EventArgs e)
         {
             AutoSplitterDisableOnSkipUntilSplit = chkAutoSplitterDisableOnSkip.Checked;
+        }
+
+        private void gameLanguageComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            gameLanguage = (GameLanguage)(int.TryParse(gameLanguageComboBox?.SelectedValue?.ToString(), out int res) ? res : 0);
+            engine = null;
+            initImageCaptureInfo();
+            updatePreviewButton_Click(sender, e);
+        }
+
+        private void txtSizeX_TextChanged(object sender, EventArgs e)
+        {
+            int.TryParse(txtSizeX.Text, out int sizeX);
+            int.TryParse(txtSizeY.Text, out int sizeY);
+            captureSize = new Size(sizeX, sizeY);
+            initImageCaptureInfo();
+            updatePreviewButton_Click(sender, e);
+        }
+
+        private void txtOffsetX_TextChanged(object sender, EventArgs e)
+        {
+            int.TryParse(txtOffsetX.Text, out int x);
+            cropOffsetX = x;
+            initImageCaptureInfo();
+            updatePreviewButton_Click(sender, e);
         }
     }
     public class AutoSplitData

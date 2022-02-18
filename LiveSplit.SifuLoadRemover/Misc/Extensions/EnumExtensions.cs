@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,19 @@ namespace LiveSplit.SifuLoadRemover.Misc.Extensions
         {
             var attributes = value.GetAttributesFromEnum(typeof(LoadingTextAttribute));
             return attributes.Length == 0 ? string.Empty : ((LoadingTextAttribute)attributes[0]).LoadingText;
+        }
+        public static int ToInt<TValue>(this TValue value) where TValue : Enum => (int)(object)value;
+
+        public static float CropOffsetX(this Enum value)
+        {
+            var attributes = value.GetAttributesFromEnum(typeof(CropOffsetAttribute));
+            return attributes.Length == 0 ? new CropOffsetAttribute().CropOffsetX : ((CropOffsetAttribute)attributes[0]).CropOffsetX;
+        }
+
+        public static Size Size(this Enum value)
+        {
+            var attributes = value.GetAttributesFromEnum(typeof(CaptureSizeAttribute));
+            return attributes.Length == 0 ? new CaptureSizeAttribute().Size : ((CaptureSizeAttribute)attributes[0]).Size;
         }
 
 

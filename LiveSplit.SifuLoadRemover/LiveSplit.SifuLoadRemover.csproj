@@ -55,6 +55,8 @@
     <Compile Include="Component\SifuLoadRemoverComponent.cs" />
     <Compile Include="Component\SifuLoadRemoverFactory.cs" />
     <Compile Include="Imports\DLLImports.cs" />
+    <Compile Include="Misc\Attributes\CaptureSizeAttribute.cs" />
+    <Compile Include="Misc\Attributes\CropOffsetAttribute.cs" />
     <Compile Include="Misc\Attributes\LoadingTextAttribute.cs" />
     <Compile Include="Misc\Attributes\TessDataAttribute.cs" />
     <Compile Include="Misc\Constants.cs" />
@@ -71,6 +73,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Settings\SifuLoadRemoverComponentSettings.resx">
+      <DependentUpon>SifuLoadRemoverComponentSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <EmbeddedResource Include="Resources\tessdata\chi_sim.traineddata" />
     <EmbeddedResource Include="Resources\tessdata\chi_tra.traineddata" />
@@ -80,9 +85,7 @@
     <EmbeddedResource Include="Resources\tessdata\ita.traineddata" />
     <EmbeddedResource Include="Resources\tessdata\jpn.traineddata" />
     <EmbeddedResource Include="Resources\tessdata\kor.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\nld.traineddata" />
     <EmbeddedResource Include="Resources\tessdata\nor.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\pol.traineddata" />
     <EmbeddedResource Include="Resources\tessdata\por.traineddata" />
     <EmbeddedResource Include="Resources\tessdata\rus.traineddata" />
     <EmbeddedResource Include="Resources\tessdata\spa.traineddata" />

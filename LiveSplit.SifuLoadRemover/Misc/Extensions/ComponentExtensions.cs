@@ -16,9 +16,9 @@ namespace LiveSplit.SifuLoadRemover.Misc.Extensions
                 .Select(value => new
                 {
                     Description = value.Description(),
-                    Value = value
+                    Value = value.ToInt()
                 })
-                .OrderBy(item => item.Value.ToString())
+                .OrderBy(item => item.Value)
                 .ToList();
 
             comboBox.DataSource = list;
@@ -27,7 +27,7 @@ namespace LiveSplit.SifuLoadRemover.Misc.Extensions
 
             foreach (var opts in list)
             {
-                if (opts.Value.ToString() == defaultSelection.ToString())
+                if (opts.Value == defaultSelection.ToInt())
                 {
                     comboBox.SelectedItem = opts;
                 }

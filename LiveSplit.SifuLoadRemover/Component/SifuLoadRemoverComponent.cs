@@ -173,15 +173,17 @@ namespace LiveSplit.SifuLoadRemover.Component
                         {
                             using (var img = Pix.LoadFromMemory(array))
                             {
-                                using (var page = Engine.Process(img))
+                                using (var page = settings.Engine.Process(img))
                                 {
                                     var text = page.GetText();
                                     var confidence = page.GetMeanConfidence();
                                     Console.WriteLine("Mean confidence: {0}", page.GetMeanConfidence());
 
-                                    Console.WriteLine("Text (GetText): {0}", text);
+                                    var normalizedText = text.Normalize();
+                                    Console.WriteLine("Text (GetText): {0}", normalizedText);
+                                    Console.WriteLine($"settings.gameLanguage: {settings.gameLanguage}");
                                     if (confidence > 0.5f)
-                                        isLoading = text.ToUpper().Contains(settings.gameLanguage.LoadingText());
+                                        isLoading = text.ToUpperInvariant().Contains(settings.gameLanguage.LoadingText().ToUpperInvariant());
                                     else if (confidence == 0 && string.IsNullOrEmpty(text) && isLoading) //EMPTY PAGE - NOT LOADING
                                         isLoading = false;
                                     else
@@ -379,20 +381,7 @@ namespace LiveSplit.SifuLoadRemover.Component
 
             return false;
         }
-        private TesseractEngine engine = null;
-        public TesseractEngine Engine
-        {
-            get
-            {
-                if (engine == null)
-                {
-                    var assembly = Assembly.GetExecutingAssembly();
-                    var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
-                    engine = new TesseractEngine($@"{assemblyDirectory}/SifuLoadRemover-tessdata", settings.gameLanguage.TessDataLanguage(), EngineMode.Default);
-                }
-                return engine;
-            }
-        }
+       
         public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
         {
             if (SplitsAreDifferent(state))
@@ -454,8 +443,8 @@ namespace LiveSplit.SifuLoadRemover.Component
         public void Dispose()
         {
             timer.CurrentState.OnStart -= timer_OnStart;
-            if (Engine != null)
-                Engine.Dispose();
+            if (settings.Engine != null)
+                settings.Engine.Dispose();
 
         }
     }
