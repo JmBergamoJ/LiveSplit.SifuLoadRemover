@@ -21,15 +21,15 @@ Currently only works with the English Version of the game.
 ## Installation instructions for LiveSplit
 
 - Download LiveSplit.SifuLoadRemover [HERE](https://github.com/JmBergamoJ/LiveSplit.SifuLoadRemover/raw/master/Download/LiveSplit.SifuLoadRemover.zip)
-- Extract the contents to your LiveSplit/Components folder (you should see lots of other DLL's in there)
+- Extract the contents to your LiveSplit folder (you should see lots of other DLL's in there)
 - Open LiveSplit, then right-click and select Edit Layout
 - Add the component (under the Control category)
 - If desired, click Layout Settings (or double-click the newly-added component) to configure the autosplitter
 
 ## Known deficiencies
 
-- The timer doesn't start automatically and doesn't end automatically. This is due to the fact that different categories have different end criteria. For the time being, make sure to split manually during the start and end of your run.
-- Third party dependencies not bundled into the Component, I.E [Tesseract](https://github.com/charlesw/tesseract)
+- The timer doesn't start automatically and doesn't end automatically. This is due to the fact that different categories have different end criteria. Make sure to split manually during the start and end of your run.
+- Third party dependencies not bundled into the Component.
 - You can specify to capture either the full primary Display (default) or an open window. This window has to be open (not minimized) but does not have to be in the foreground.
 - This might not work for windows with DirectX/OpenGL surfaces, nothing I can do about that. (Use Display capture for those cases, sorry)
 
