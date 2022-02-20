@@ -5,14 +5,10 @@
 			<file path="Components/LiveSplit.SifuLoadRemover.dll" status="changed" />
 		</files>
 		<changelog>
-			<change>
-				- Added Support for other game languages:
+			<change>- Added Support for other game languages:
 				Chinese, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Turkish
-				-Removed Dutch and Polish languages
-			</change>
-			<change>
-				Component automatically downloads trained data while changing game languages (this makes the component slightly less bloated).
-			</change>
+				-Removed Dutch and Polish languages</change>
+			<change>Component automatically downloads trained data while changing game languages (this makes the component slightly less bloated).</change>
 		</changelog>
 	</update>
 	<update version="1.0.1">
