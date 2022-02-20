@@ -77,19 +77,19 @@
       <DependentUpon>SifuLoadRemoverComponentSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\tessdata\chi_sim.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\chi_tra.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\deu.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\eng.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\fra.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\ita.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\jpn.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\kor.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\nor.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\por.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\rus.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\spa.traineddata" />
-    <EmbeddedResource Include="Resources\tessdata\tur.traineddata" />
+    <None Include="Resources\tessdata\chi_sim.traineddata" />
+    <None Include="Resources\tessdata\chi_tra.traineddata" />
+    <None Include="Resources\tessdata\deu.traineddata" />
+    <None Include="Resources\tessdata\eng.traineddata" />
+    <None Include="Resources\tessdata\fra.traineddata" />
+    <None Include="Resources\tessdata\ita.traineddata" />
+    <None Include="Resources\tessdata\jpn.traineddata" />
+    <None Include="Resources\tessdata\kor.traineddata" />
+    <None Include="Resources\tessdata\nor.traineddata" />
+    <None Include="Resources\tessdata\por.traineddata" />
+    <None Include="Resources\tessdata\rus.traineddata" />
+    <None Include="Resources\tessdata\spa.traineddata" />
+    <None Include="Resources\tessdata\tur.traineddata" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LiveSplit\LiveSplit\UpdateManager\UpdateManager.csproj">

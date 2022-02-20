@@ -34,7 +34,6 @@ namespace LiveSplit.SifuLoadRemover.Component
         public IComponent Create(LiveSplitState state)
         {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(Resolver);
-            EnsureTessDataFilesArePresent();
             return new SifuLoadRemoverComponent(state);
         }
         public string UpdateName
@@ -47,33 +46,13 @@ namespace LiveSplit.SifuLoadRemover.Component
 
         public Version Version
         {
-            get { return Version.Parse("1.0"); }
-        }
-
-
-        private void EnsureTessDataFilesArePresent()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
-            var tessDataDir = Path.Combine(assemblyDirectory, "SifuLoadRemover-tessdata");
-            if (!Directory.Exists(tessDataDir))
-                Directory.CreateDirectory(tessDataDir);
-
-
-            foreach (var item in assembly.GetManifestResourceNames().Where(r => r.Contains("tessdata")))
+            get
             {
-                using (var resource = assembly.GetManifestResourceStream(item))
-                {
-                    var filePath = item.Split('.');
-                    string filename = $"{filePath[filePath.Length - 2]}.{filePath[filePath.Length - 1]}";
-                    if (!File.Exists($@"{tessDataDir}\{filename}"))
-                    {
-                        using (var file = new FileStream($@"{tessDataDir}\{filename}", FileMode.Create, FileAccess.Write))
-                        {
-                            resource.CopyTo(file);
-                        }
-                    }
-                }
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+                string version = fvi.FileVersion;
+                Version.TryParse(version, out var res);
+                return res;
             }
         }
 

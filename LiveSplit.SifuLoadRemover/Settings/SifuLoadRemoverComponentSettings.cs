@@ -14,6 +14,7 @@ using LiveSplit.SifuLoadRemover.Misc.Enums;
 using LiveSplit.SifuLoadRemover.Misc.Extensions;
 using LiveSplit.SifuLoadRemover.Misc;
 using Tesseract;
+using System.Net;
 
 namespace LiveSplit.SifuLoadRemover
 {
@@ -33,9 +34,17 @@ namespace LiveSplit.SifuLoadRemover
             {
                 if (engine == null)
                 {
-                    var assembly = Assembly.GetExecutingAssembly();
-                    var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
-                    engine = new TesseractEngine($@"{assemblyDirectory}/SifuLoadRemover-tessdata", gameLanguage.TessDataLanguage(), EngineMode.Default);
+                    try
+                    {
+                        CheckAndDownloadTessData();
+                        var assembly = Assembly.GetExecutingAssembly();
+                        var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
+                        engine = new TesseractEngine($@"{assemblyDirectory}/SifuLoadRemover-tessdata", gameLanguage.TessDataLanguage(), EngineMode.Default);
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
                 }
                 return engine;
             }
@@ -585,12 +594,8 @@ namespace LiveSplit.SifuLoadRemover
                 processCaptureIndex = processListComboBox.SelectedIndex - numScreens;
             }
 
-            //selectionTopLeft = new Point(0, 0);
-            //selectionBottomRight = new Point(previewPictureBox.Width, previewPictureBox.Height);
-
             selectionRectanglePreviewBox = new Rectangle(selectionTopLeft.X, selectionTopLeft.Y, selectionBottomRight.X - selectionTopLeft.X, selectionBottomRight.Y - selectionTopLeft.Y);
 
-            //Console.WriteLine("SELECTED ITEM: {0}", processListComboBox.SelectedItem.ToString());
             DrawPreview();
         }
 
@@ -797,7 +802,6 @@ namespace LiveSplit.SifuLoadRemover
                 {
                     if (!String.IsNullOrEmpty(process.MainWindowTitle))
                     {
-                        //Console.WriteLine("Process: {0} ID: {1} Window title: {2} HWND PTR {3}", process.ProcessName, process.Id, process.MainWindowTitle, process.MainWindowHandle);
                         processListComboBox.Items.Add(process.ProcessName + ": " + process.MainWindowTitle);
                         captureIDs.Add(process.ProcessName);
                         processes_with_name.Add(process);
@@ -986,7 +990,51 @@ namespace LiveSplit.SifuLoadRemover
             gameLanguage = (GameLanguage)(int.TryParse(gameLanguageComboBox?.SelectedValue?.ToString(), out int res) ? res : 0);
             engine = null;
             initImageCaptureInfo();
+            CheckAndDownloadTessData();
             updatePreviewButton_Click(sender, e);
+        }
+
+        public void CheckAndDownloadTessData()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var assemblyDirectory = Path.GetDirectoryName(assembly.Location);
+            var tessDataDir = Path.Combine(assemblyDirectory, Constants.TessDataFolderName);
+
+            Directory.CreateDirectory(tessDataDir);
+
+            tessDataDir = Path.Combine(tessDataDir, $"{gameLanguage.TessDataLanguage()}{Constants.TrainedDataFileExtension}");
+            if (!File.Exists(tessDataDir))
+            {
+                DialogResult dialogResult = MessageBox.Show(
+                    string.Format(Constants.Messages.DownloadTessData, gameLanguage.Description()),
+                    Constants.Messages.DownloadTessDataTitle,
+                    MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.Headers.Add("a", "a");
+                        try
+                        {
+                            wc.DownloadFile(Constants.Component.UpdateURL + $"/LiveSplit.SifuLoadRemover/Resources/tessdata/{gameLanguage.TessDataLanguage()}{Constants.TrainedDataFileExtension}", tessDataDir);
+                        }
+                        catch (Exception ex)
+                        {
+                            string errorMessage = ex.Message;
+                            var innerException = ex.InnerException;
+                            while (innerException != null)
+                            {
+                                errorMessage += Environment.NewLine;
+                                errorMessage += innerException.Message;
+                                innerException = innerException.InnerException;
+                            }
+
+                            Console.WriteLine(ex.ToString());
+                            MessageBox.Show($"Download Failed: {ex.Message}", "Download Failed", MessageBoxButtons.OK);
+                        }
+                    }
+                }
+            }
         }
 
         private void txtSizeX_TextChanged(object sender, EventArgs e)

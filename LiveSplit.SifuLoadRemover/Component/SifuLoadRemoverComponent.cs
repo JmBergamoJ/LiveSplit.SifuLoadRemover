@@ -267,9 +267,6 @@ namespace LiveSplit.SifuLoadRemover.Component
                             SifuState = SifuGameState.RUNNING;
                         }
                     }
-
-
-                    //Console.WriteLine("TIME TAKEN FOR DETECTION: {0}", DateTime.Now - lastTime);
                 }
             }
             catch (Exception ex)
